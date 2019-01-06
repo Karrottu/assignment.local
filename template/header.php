@@ -14,7 +14,7 @@
     <body>
         <aside id="sidebar" class="collapse d-block">
             <header class="navbar navbar-light align-items-stretch">
-                <h4 class="navbar-brand">Series Tracker</h4>
+                <h4 class="navbar-brand">Student Companion</h4>
 
                 <a href="#sidebar" class="toggle-sidebar ml-auto d-block d-md-none border-left" data-toggle="collapse">
                     <i class="icon fas fa-arrow-left"></i>
@@ -26,7 +26,7 @@
                     <li class="nav-item dropright">
                         <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="icon fas fa-tv"></i>
-                            <span>Channels</span>
+                            <span>Channel</span>
                         </a>
 
                         <div class="dropdown-menu">
