@@ -446,7 +446,7 @@
     }
 
     // Retrieves a single episode from the database.
-    function get_episode($id)
+    function get_task($id)
     {
         // 1. Connect to the database.
         $link = connect();
@@ -457,14 +457,11 @@
         // 3. Generate a query and return the result.
         $result = mysqli_query($link, "
             SELECT
-                name AS 'episode-name',
-                description AS 'episode-desc',
-                airdate AS 'episode-airdate',
-                season AS 'episode-season',
-                episode AS 'episode-episode',
-                rating AS 'episode-rating',
-                show_id AS 'episode-show'
-            FROM tbl_episodes
+                name AS 'task-name',
+                description AS 'task-desc',
+                deadline AS 'task-deadline',
+                course_id AS 'course-task',
+            FROM tbl_tasks
             WHERE id = {$id}
         ");
 
