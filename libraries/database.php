@@ -414,8 +414,8 @@
         // 2. Retrieve all the rows from the table.
         $result = mysqli_query($link, "
             SELECT *
-            FROM tbl_shows
-            ORDER BY name ASC
+            FROM tbl_courses
+            ORDER BY crsname ASC
         ");
 
         // 3. Disconnect from the database.
@@ -499,7 +499,7 @@
             LEFT JOIN
                 tbl_user_details b
             ON
-                a.id = b.user_id
+                a.id = b.users_id
             LEFT JOIN
                 tbl_user_auth c
             ON
@@ -617,21 +617,25 @@
         // 2. protect the password using blowfish.
         $password = password_hash($salt.$password, CRYPT_BLOWFISH);
 
+        $time = time();
+
         // 3. Prepare the statement using mysqli
         // to take care of any potential SQL injections.
         $stmt = mysqli_prepare($link, "
             INSERT INTO tbl_users
-                (email, password, salt, creation_date)
+                (email, password, salt, creation_date, tbl_roles_id)
             VALUES
-                (?, ?, ?, ?)
+                (?, ?, ?, ?, 2)
         ");
 
         // 4. Bind the parameters so we don't have to do the work ourselves.
         // the sequence means: string string double integer double
-        mysqli_stmt_bind_param($stmt, 'sssi', $email, $password, $salt, time());
+        mysqli_stmt_bind_param($stmt, 'sssi', $email, $password, $salt, $time);
 
         // 5. Execute the statement.
         mysqli_stmt_execute($stmt);
+
+        // echo mysqli_error($link); die;
 
         // 6. Disconnect from the database.
         disconnect($link);
@@ -650,7 +654,7 @@
         // to take care of any potential SQL injections.
         $stmt = mysqli_prepare($link, "
             INSERT INTO tbl_user_details
-                (user_id, name, surname)
+                (users_id, name, surname)
             VALUES
                 (?, ?, ?)
         ");

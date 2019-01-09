@@ -65,8 +65,9 @@
     $id = register_login_data($email, $password, $salt);
     if(!$id)
     {
-        exit('The query was unsuccrssful.');
+        exit('The query was unsuccessful.');
     }
+    
     # 6c. Register the user details and check for errors.
     $check = register_user_details($id, $name, $surname);
     if(!$check)

@@ -23,24 +23,25 @@
 
             <nav id="sidebar-nav">
                 <ul class="nav flex-column">
+
                     <li class="nav-item dropright">
                         <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="icon fas fa-tv"></i>
-                            <span>Channel</span>
+                            <i class="icon fas fa-theater-masks"></i>
+                            <span>Courses</span>
                         </a>
 
                         <div class="dropdown-menu">
                             <ul class="nav">
                                 <li class="nav-item">
-                                    <a href="channels-list.php" class="nav-link">
+                                    <a href="course-list.php" class="nav-link">
                                         <i class="icon fas fa-bars"></i>
-                                        <span>All Channels</span>
+                                        <span>All Courses</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="channels-add.php" class="nav-link">
+                                    <a href="course-add.php" class="nav-link">
                                         <i class="icon fas fa-plus"></i>
-                                        <span>Add Channel</span>
+                                        <span>Add Course</span>
                                     </a>
                                 </li>
                             </ul>
@@ -65,30 +66,6 @@
                                 </ul>
                             </div>
                         </li>
-
-                    <li class="nav-item dropright">
-                        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="icon fas fa-theater-masks"></i>
-                            <span>Shows</span>
-                        </a>
-
-                        <div class="dropdown-menu">
-                            <ul class="nav">
-                                <li class="nav-item">
-                                    <a href="shows-list.php" class="nav-link">
-                                        <i class="icon fas fa-bars"></i>
-                                        <span>All Shows</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="shows-add.php" class="nav-link">
-                                        <i class="icon fas fa-plus"></i>
-                                        <span>Add Show</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
 
                     <li class="nav-item">
                         <a href="logout.php" class="nav-link">

@@ -1,6 +1,6 @@
 <?php
     // definitions are constant variables.
-    define('BASE_URL', 'http://localhost/php/series-tracker/');
+    define('BASE_URL', 'http://assignment.local/');
 
     // Redirects the website to a specific file.
     function redirect($url = '', $param = [])
@@ -33,7 +33,6 @@
 
         // redirect and stop the code.
         header("Location:{$url}");
-
         exit;
     }
 ?>
