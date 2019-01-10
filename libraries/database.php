@@ -599,11 +599,11 @@
         return mysqli_stmt_affected_rows($stmt);
     }
 
-	// generates a random code
-	function random_code($limit = 8)
-	{
-	    return substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $limit);
-	}
+  	// generates a random code
+  	function random_code($limit = 8)
+  	{
+  	    return substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $limit);
+  	}
 
     // Registers a user's login data.
     function register_login_data($email, $password, $salt)
