@@ -1,0 +1,26 @@
+// main: style.scss
+
+$theme: (
+    primary: #4c2d4c,
+    primaryLight: #795778,
+    primaryDark: #230624,
+    secondary: #65c07c,
+    secondaryLight: #97f3ac,
+    secondaryDark: #328f4f,
+    background: #e2e4e6,
+    borders: #e1e5eb,
+    light: #fff,
+);
+
+$nav: (
+    active: #4c2d4c,
+    icon: #65c07c,
+    text: #171717,
+    textLight: #fff
+);
+
+$layout: (
+    navbar: 3.5rem,
+    rootSize: 14px,
+    sidebar: 15rem
+);

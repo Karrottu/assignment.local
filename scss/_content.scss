@@ -1,0 +1,51 @@
+// main: style.scss
+
+#content {
+    margin-left: size($layout, 'sidebar');
+
+    .page-header {
+        h6 {
+            color: color($theme, 'secondaryLight');
+            font-size: 0.8rem;
+            font-weight: lighter;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        h3 {
+            margin: 0;
+        }
+    }
+
+    .table {
+        counter-reset: counter;
+
+        .counter {
+            &::before {
+                counter-increment: counter;
+                content: counter(counter);
+            }
+        }
+
+        a {
+            color: color($theme, 'secondaryDark');
+            margin-left: 0.25rem;
+            text-decoration: none;
+
+            .icon {
+                font-size: 1rem;
+            }
+        }
+    }
+
+    button {
+        background-color: color($theme, 'primary');
+        border: color($theme, 'primaryLight');
+    }
+}
+
+@media (max-width: 767px) {
+    #content {
+        margin-left: 0;
+    }
+}

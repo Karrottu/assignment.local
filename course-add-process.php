@@ -16,9 +16,7 @@
 
     // 3. retrieve the variables from $_POST.
     $name       = $_POST['course-name'];
-    $code       = $_POST['course-code'];
-    $room       = $_POST['course-room'];
-    $lecturer   = $_POST['course-lecturer'];
+    $code       = random_code(10);
 
     // we'll use a boolean to determine if we have errors on the page.
     $has_errors = FALSE;
@@ -39,7 +37,7 @@
     // 6. Insert the data in the table.
     // since the function will return a number, we can check it
     // to see if the query worked.
-    $check = add_course($name, $code, $room, $lecturer);
+    $check = add_course($name, $code);
     if (!$check)
     {
         exit("The query was unsuccessful.");

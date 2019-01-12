@@ -25,8 +25,15 @@
                 <ul class="nav flex-column">
 
                     <li class="nav-item dropright">
+                        <a href="index.php" class="nav-link" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropright">
                         <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="icon fas fa-theater-masks"></i>
+                            <i class="icon fas fa-book"></i>
                             <span>Courses</span>
                         </a>
 
@@ -51,21 +58,34 @@
                     <ul class="nav flex-column">
                         <li class="nav-item dropright">
                             <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="icon fas fa-eye"></i>
-                                <span>Episodes</span>
+                                <i class="icon fas fa-clipboard-list"></i>
+                                <span>Tasks</span>
                             </a>
 
                             <div class="dropdown-menu">
                                 <ul class="nav">
                                     <li class="nav-item">
-                                        <a href="episodes-add.php" class="nav-link">
+                                        <a href="task-list.php" class="nav-link">
+                                            <i class="icon fas fa-bars"></i>
+                                            <span>All Tasks</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="task-add.php" class="nav-link">
                                             <i class="icon fas fa-plus"></i>
-                                            <span>Add Episode</span>
+                                            <span>Add Task</span>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
+
+                    <li class="nav-item dropright">
+                        <a href="notes.php" class="nav-link" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon fas fa-sticky-note"></i>
+                            <span>Notes</span>
+                        </a>
+                    </li>
 
                     <li class="nav-item">
                         <a href="logout.php" class="nav-link">

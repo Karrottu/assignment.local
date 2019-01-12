@@ -9,7 +9,7 @@
 
     // 2. Get the information from the database.
     // if after I set $show, the value is FALSE:
-    if (!$show = get_show($id))
+    if (!$show = get_task($id))
     {
         exit("This show doesn't exist.");
     }
