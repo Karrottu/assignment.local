@@ -35,6 +35,7 @@
     {
         exit('Your email or password are incorrect');
     }
+
     # 7. The user managed to log in. Keep a record in the database.
     $code = random_code(32);
     $ip_address = $_SERVER['REMOTE_ADDR'];

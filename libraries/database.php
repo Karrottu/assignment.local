@@ -17,7 +17,7 @@
     }
 
     // Add a new course to the table.
-    function add_course($name, $code, $room, $lecturer)
+    function add_course($name, $code)
     {
         // 1. Connect to the database.
         $link = connect();
@@ -26,14 +26,14 @@
         // to take care of any potential SQL injections.
         $stmt = mysqli_prepare($link, "
             INSERT INTO tbl_courses
-                (crsname, code, room, lecturer)
+                (crsname, code)
             VALUES
-                (?, ?, ?, ?)
+                (?, ?)
         ");
 
         // 3. Bind the parameters so we don't have to do the work ourselves.
         // the sequence means: string string double integer double
-        mysqli_stmt_bind_param($stmt, 'ssss', $name, $code, $room, $lecturer);
+        mysqli_stmt_bind_param($stmt, 'ss', $name, $code);
 
         // 4. Execute the statement.
         mysqli_stmt_execute($stmt);
@@ -46,7 +46,7 @@
     }
 
     // Add a new task to the table.
-    function add_task($name, $desc, $deadline, $course)
+    function add_task($name, $desc, $deadline, $course_id)
     {
         // 1. Connect to the database.
         $link = connect();
@@ -62,7 +62,7 @@
 
         // 3. Bind the parameters so we don't have to do the work ourselves.
         // the sequence means: string string double integer double
-        mysqli_stmt_bind_param($stmt, 'ssiiidi', $name, $desc, $season, $episode, $airdate, $rating, $show);
+        mysqli_stmt_bind_param($stmt, 'ssii', $name, $desc, $deadline, $course_id);
 
         // 4. Execute the statement.
         mysqli_stmt_execute($stmt);
@@ -103,7 +103,7 @@
     }
 
     // Checks that the information in a show has changed.
-    function check_task($id, $name, $desc, $deadline, $course)
+    function check_task($id, $name, $desc, $deadline, $course_id)
     {
         // 1. Connect to the database.
         $link = connect();
@@ -113,18 +113,18 @@
         $name = mysqli_real_escape_string($link, $name);
         $desc = mysqli_real_escape_string($link, $desc);
         $deadline = mysqli_real_escape_string($link, $deadline);
-        $course = mysqli_real_escape_string($link, $course);
+        $course_id = mysqli_real_escape_string($link, $course_id);
 
         // 3. Generate a query and return the result.
         $result = mysqli_query($link, "
             SELECT id
             FROM tbl_tasks
             WHERE
-                id = {$id} AND
+                task_id = {$id} AND
                 tskname = '{$name}' AND
                 description = '{$desc}' AND
                 deadline = {$deadline} AND
-                course_id = {$course}
+                course_id = {$course_id}
         ");
 
         // 4. Disconnect from the database.
@@ -169,28 +169,24 @@
     }
 
     // Checks that the information in a show has changed.
-    function check_course($id, $name, $code, $room, $lecturer)
+    function check_course($id, $crsname, $code)
     {
         // 1. Connect to the database.
         $link = connect();
 
         // 2. Protect variables to avoid any SQL injection
         $id = mysqli_real_escape_string($link, $id);
-        $name = mysqli_real_escape_string($link, $name);
+        $crsname = mysqli_real_escape_string($link, $crsname);
         $code = mysqli_real_escape_string($link, $code);
-        $room = mysqli_real_escape_string($link, $room);
-        $lecturer = mysqli_real_escape_string($link, $lecturer);
 
         // 3. Generate a query and return the result.
         $result = mysqli_query($link, "
-            SELECT id
+            SELECT course_id
             FROM tbl_courses
             WHERE
-                id = {$id} AND
-                crsname = '{$name}' AND
-                code = '{$code}' AND
-                room = {$room} AND
-                lecturer = {$lecturer}
+                course_id = {$id} AND
+                crsname = '{$crsname}' AND
+                code = '{$code}'
         ");
 
         // 4. Disconnect from the database.
@@ -237,7 +233,7 @@
         // to take care of any potential SQL injections.
         $stmt = mysqli_prepare($link, "
             DELETE FROM tbl_courses
-            WHERE id = ?
+            WHERE course_id = ?
         ");
 
         // 3. Bind the parameters so we don't have to do the work ourselves.
@@ -264,7 +260,7 @@
         // to take care of any potential SQL injections.
         $stmt = mysqli_prepare($link, "
             DELETE FROM tbl_tasks
-            WHERE id = ?
+            WHERE task_id = ?
         ");
 
         // 3. Bind the parameters so we don't have to do the work ourselves.
@@ -282,9 +278,9 @@
     }
 
     // Edit a course in the table.
-    function edit_course($id, $crsname, $code, $room, $lecturer)
+    function edit_course($id, $crsname, $code)
     {
-        if (check_show($id, $crsname, $code, $room, $lecturer))
+        if (check_course($id, $crsname, $code))
         {
             return TRUE;
         }
@@ -298,18 +294,17 @@
             UPDATE tbl_courses
             SET
                 crsname = ?,
-                code = ?,
-                room = ?,
-                lecturer = ?,
+                code = ?
             WHERE
-                id = ?
+                course_id = ?
         ");
 
         // 3. Bind the parameters so we don't have to do the work ourselves.
-        mysqli_stmt_bind_param($stmt, 'ssssi', $crsname, $code, $room, $lecturer, $id);
+        mysqli_stmt_bind_param($stmt, 'ssi', $crsname, $code, $id);
 
         // 4. Execute the statement.
         mysqli_stmt_execute($stmt);
+
 
         // 5. Disconnect from the database.
         disconnect($link);
@@ -319,9 +314,9 @@
     }
 
     // Edit a task in the table.
-    function edit_task($tskname, $desc, $deadline, $course_id)
+    function edit_task($id, $tskname, $desc, $deadline, $course_id)
     {
-        if (check_task($tskname, $desc, $deadline, $course_id))
+        if (check_task($id, $tskname, $desc, $deadline, $course_id))
         {
             return TRUE;
         }
@@ -339,7 +334,7 @@
                 deadline = ?,
                 course_id = ?
             WHERE
-                id = ?
+                task_id = ?
         ");
 
         // 3. Bind the parameters so we don't have to do the work ourselves.
@@ -393,7 +388,7 @@
             SELECT *
             FROM tbl_tasks
             WHERE course_id = {$course_id}
-            ORDER BY season ASC, episode ASC
+            ORDER BY tskname ASC
         ");
 
         echo mysqli_error($link);
@@ -433,9 +428,9 @@
 
         // 2. Retrieve all the rows from the table.
         $result = mysqli_query($link, "
-            SELECT id, name
-            FROM tbl_shows
-            ORDER BY name ASC
+            SELECT course_id, name
+            FROM tbl_courses
+            ORDER BY crsname ASC
         ");
 
         // 3. Disconnect from the database.
@@ -443,6 +438,32 @@
 
         // 4. Return the result set.
         return $result;
+    }
+
+    // Retrieves a single show from the database.
+    function get_course($id)
+    {
+
+        // 1. Connect to the database.
+        $link = connect();
+
+        // 2. Protect variables to avoid any SQL injection
+        $id = mysqli_real_escape_string($link, $id);
+
+        // 3. Generate a query and return the result.
+        $result = mysqli_query($link, "
+            SELECT
+                crsname AS 'course-name',
+                code AS 'course-code'
+            FROM tbl_courses
+            WHERE course_id = {$id}
+        ");
+
+        // 4. Disconnect from the database.
+        disconnect($link);
+
+        // 5. There should only be one row, or FALSE if nothing.
+        return mysqli_fetch_assoc($result) ?: FALSE;
     }
 
     // Retrieves a single episode from the database.
@@ -457,12 +478,12 @@
         // 3. Generate a query and return the result.
         $result = mysqli_query($link, "
             SELECT
-                name AS 'task-name',
+                tskname AS 'task-name',
                 description AS 'task-desc',
                 deadline AS 'task-deadline',
                 course_id AS 'course-task',
             FROM tbl_tasks
-            WHERE id = {$id}
+            WHERE task_id = {$id}
         ");
 
         // 4. Disconnect from the database.
@@ -512,34 +533,6 @@
         return mysqli_fetch_assoc($result) ?: FALSE;
     }
 
-    // Retrieves a single show from the database.
-    function get_show($id)
-    {
-        // 1. Connect to the database.
-        $link = connect();
-
-        // 2. Protect variables to avoid any SQL injection
-        $id = mysqli_real_escape_string($link, $id);
-
-        // 3. Generate a query and return the result.
-        $result = mysqli_query($link, "
-            SELECT
-                name AS 'show-name',
-                description AS 'show-desc',
-                airtime AS 'show-airtime',
-                duration AS 'show-duration',
-                rating AS 'show-rating',
-                channel_id AS 'show-channel'
-            FROM tbl_shows
-            WHERE id = {$id}
-        ");
-
-        // 4. Disconnect from the database.
-        disconnect($link);
-
-        // 5. There should only be one row, or FALSE if nothing.
-        return mysqli_fetch_assoc($result) ?: FALSE;
-    }
 
     // Checks that a user is logged into the system
     function is_logged()

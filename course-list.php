@@ -28,8 +28,6 @@
                         <tr>
                             <th scope="col">Code</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Lecturer</th>
-                            <th scope="col">Room</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -38,16 +36,14 @@
                         <tr>
                             <td><?php echo $row['code']; ?></td>
                             <td><?php echo $row['crsname']; ?></td>
-                            <td><?php echo $row['lecturer']; ?></td>
-                            <td><?php echo $row['room']; ?> </td>
                             <td>
-                                <a href="course-edit.php?id=<?php echo $row['id']; ?>">
+                                <a href="course-edit.php?id=<?php echo $row['course_id']; ?>">
                                     <i class="icon fas fa-pencil-alt"></i>
                                 </a>
-                                <a href="course-delete.php?id=<?php echo $row['id']; ?>">
+                                <a href="course-delete.php?id=<?php echo $row['course_id']; ?>">
                                     <i class="icon fas fa-trash"></i>
                                 </a>
-                                <a href="episodes-list.php?id=<?php echo $row['id']; ?>">
+                                <a href="course-list.php?id=<?php echo $row['course_id']; ?>">
                                     <i class="icon fas fa-eye"></i>
                                 </a>
                             </td>

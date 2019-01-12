@@ -27,30 +27,6 @@
 <?php endif; ?>
                 <input type="text" name="course-name" class="form-control mb-3" placeholder="Course Name"
                     value="<?php echo get_value($formdata, 'course-name'); ?>">
-
-                <div class="form-group row">
-                    <label for="input-course-code" class="col-sm-3 col-form-label">Code:</label>
-                    <div class="col-sm-9">
-                        <input type="text" name="course-code" class="form-control mb-3" placeholder="ABC-123"
-                            id="input-course-code" value="<?php echo get_value($formdata, 'course-code'); ?>">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="input-course-room" class="col-sm-3 col-form-label">Room:</label>
-                    <div class="col-sm-9">
-                        <input type="text" name="course-room" class="form-control mb-3" placeholder="ABC-123"
-                            id="input-course-room" value="<?php echo get_value($formdata, 'course-room'); ?>">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="input-course-lecturer" class="col-sm-3 col-form-label">Lecturer:</label>
-                    <div class="col-sm-9">
-                        <input type="text" name="course-lecturer" class="form-control mb-3" placeholder="0"
-                            id="input-course-lecturer" value="<?php echo get_value($formdata, 'course-lecturer'); ?>">
-                    </div>
-                </div>
             </div>
         </div>
     </div>
