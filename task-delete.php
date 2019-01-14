@@ -10,15 +10,15 @@
     // In this case, you might also want to see if the user has permission
     // to delete a record.
     // if after I set $episode, the value is FALSE:
-    if (!$episode = get_episode($id))
+    if (!$task = get_task($id))
     {
-        exit("This episode doesn't exist.");
+        exit("This task doesn't exist.");
     }
 
-    if (!delete_episode($id))
+    if (!delete_task($id))
     {
         exit("The episode could not be deleted.");
     }
 
-    redirect('episodes-list', ['id' => $_GET['show']]);
+    redirect('task-list', ['id' => $_GET['course']]);
 ?>

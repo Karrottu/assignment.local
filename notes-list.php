@@ -1,21 +1,10 @@
 <?php
+
     include 'libraries/database.php';
     include 'libraries/login-check.php';
 
     include 'template/header.php';
 
-    // 1. Store the id for the show in a variable.
-    $id = $_GET['id'];
-
-    // 2. Get the information from the database.
-    // if after I set $task, the value is FALSE:
-    if (!$course = get_course($id))
-    {
-        exit("This show doesn't exist.");
-    }
-
-    // 3. Get the tasks for this course.
-    $task = get_all_tasks($_GET['id']);
 ?>
 
 <header class="page-header row no-gutters py-4 border-bottom">
@@ -42,7 +31,7 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Deadline</th>
+                            <th scope="col"></th>
                             <th scope="col"></th>
                         </tr>
                     </thead>

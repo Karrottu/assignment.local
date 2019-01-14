@@ -55,7 +55,7 @@
         // to take care of any potential SQL injections.
         $stmt = mysqli_prepare($link, "
             INSERT INTO tbl_tasks
-                (name, description, deadline, course_id)
+                (tskname, description, deadline, course_id)
             VALUES
                 (?, ?, ?, ?)
         ");
@@ -103,27 +103,55 @@
     }
 
     // Checks that the information in a show has changed.
-    function check_task($id, $name, $desc, $deadline, $course_id)
+    function check_course($id, $crsname, $code)
     {
         // 1. Connect to the database.
         $link = connect();
 
         // 2. Protect variables to avoid any SQL injection
         $id = mysqli_real_escape_string($link, $id);
-        $name = mysqli_real_escape_string($link, $name);
+        $crsname = mysqli_real_escape_string($link, $crsname);
+        $code = mysqli_real_escape_string($link, $code);
+
+        // 3. Generate a query and return the result.
+        $result = mysqli_query($link, "
+            SELECT course_id
+            FROM tbl_courses
+            WHERE
+                course_id = {$id} AND
+                crsname = '{$crsname}' AND
+                code = '{$code}'
+        ");
+
+        // 4. Disconnect from the database.
+        disconnect($link);
+
+        // 5. There should only be one row, or FALSE if nothing.
+        return mysqli_num_rows($result) == 1;
+    }
+
+    // Checks that the information in a show has changed.
+    function check_task($task_id, $tskname, $desc, $deadline, $course_id)
+    {
+        // 1. Connect to the database.
+        $link = connect();
+
+        // 2. Protect variables to avoid any SQL injection
+        $task_id = mysqli_real_escape_string($link, $task_id);
+        $tskname = mysqli_real_escape_string($link, $tskname);
         $desc = mysqli_real_escape_string($link, $desc);
         $deadline = mysqli_real_escape_string($link, $deadline);
         $course_id = mysqli_real_escape_string($link, $course_id);
 
         // 3. Generate a query and return the result.
         $result = mysqli_query($link, "
-            SELECT id
+            SELECT task_id
             FROM tbl_tasks
             WHERE
-                task_id = {$id} AND
-                tskname = '{$name}' AND
+                task_id = {$task_id} AND
+                tskname = '{$tskname}' AND
                 description = '{$desc}' AND
-                deadline = {$deadline} AND
+                deadline = '{$deadline}' AND
                 course_id = {$course_id}
         ");
 
@@ -168,33 +196,6 @@
         return $record ['id'];
     }
 
-    // Checks that the information in a show has changed.
-    function check_course($id, $crsname, $code)
-    {
-        // 1. Connect to the database.
-        $link = connect();
-
-        // 2. Protect variables to avoid any SQL injection
-        $id = mysqli_real_escape_string($link, $id);
-        $crsname = mysqli_real_escape_string($link, $crsname);
-        $code = mysqli_real_escape_string($link, $code);
-
-        // 3. Generate a query and return the result.
-        $result = mysqli_query($link, "
-            SELECT course_id
-            FROM tbl_courses
-            WHERE
-                course_id = {$id} AND
-                crsname = '{$crsname}' AND
-                code = '{$code}'
-        ");
-
-        // 4. Disconnect from the database.
-        disconnect($link);
-
-        // 5. There should only be one row, or FALSE if nothing.
-        return mysqli_num_rows($result) == 1;
-    }
 
     // Clears the login data from a table.
     function clear_login_data($id, $auth_code)
@@ -314,9 +315,9 @@
     }
 
     // Edit a task in the table.
-    function edit_task($id, $tskname, $desc, $deadline, $course_id)
+    function edit_task($task_id, $tskname, $desc, $deadline, $course_id)
     {
-        if (check_task($id, $tskname, $desc, $deadline, $course_id))
+        if (check_task($task_id, $tskname, $desc, $deadline, $course_id))
         {
             return TRUE;
         }
@@ -339,7 +340,7 @@
 
         // 3. Bind the parameters so we don't have to do the work ourselves.
         // the sequence means: string string double integer double integer
-        mysqli_stmt_bind_param($stmt, 'ssii', $tskname, $desc, $deadline, $course_id);
+        mysqli_stmt_bind_param($stmt, 'ssiii', $tskname, $desc, $deadline, $course_id, $task_id);
 
         // 4. Execute the statement.
         mysqli_stmt_execute($stmt);
@@ -391,8 +392,6 @@
             ORDER BY tskname ASC
         ");
 
-        echo mysqli_error($link);
-
         // 3. Disconnect from the database.
         disconnect($link);
 
@@ -428,7 +427,7 @@
 
         // 2. Retrieve all the rows from the table.
         $result = mysqli_query($link, "
-            SELECT course_id, name
+            SELECT course_id, crsname
             FROM tbl_courses
             ORDER BY crsname ASC
         ");
@@ -481,7 +480,7 @@
                 tskname AS 'task-name',
                 description AS 'task-desc',
                 deadline AS 'task-deadline',
-                course_id AS 'course-task',
+                course_id AS 'task-course'
             FROM tbl_tasks
             WHERE task_id = {$id}
         ");
@@ -599,7 +598,7 @@
   	}
 
     // Registers a user's login data.
-    function register_login_data($email, $password, $salt)
+    function register_login_data($email, $password, $salt, $role)
     {
         // 1. Connect to the database.
         $link = connect();
@@ -615,12 +614,12 @@
             INSERT INTO tbl_users
                 (email, password, salt, creation_date, tbl_roles_id)
             VALUES
-                (?, ?, ?, ?, 2)
+                (?, ?, ?, ?, ?)
         ");
 
         // 4. Bind the parameters so we don't have to do the work ourselves.
         // the sequence means: string string double integer double
-        mysqli_stmt_bind_param($stmt, 'sssi', $email, $password, $salt, $time);
+        mysqli_stmt_bind_param($stmt, 'sssii', $email, $password, $salt, $time, $role);
 
         // 5. Execute the statement.
         mysqli_stmt_execute($stmt);
@@ -662,4 +661,5 @@
         // 6. If the query worked, we should have a new primary key ID.
         return mysqli_stmt_affected_rows($stmt);
     }
+
 ?>

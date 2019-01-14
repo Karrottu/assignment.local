@@ -58,6 +58,14 @@
 <?php endif; ?>
                         <input type="text" name="user-surname" class="form-control mb-3" placeholder="Smith"
                             value="<?php echo get_value($formdata, 'user-surname'); ?>">
+
+                        <div>
+                            <input type="radio" name="isAdmin" value="1">Lecturer
+                        </div>
+
+                        <div>
+                            <input type="radio" name="isAdmin" value="2" checked>Student
+                        </div>
                     </div>
 
                     <div class="card-footer text-center">

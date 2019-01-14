@@ -43,7 +43,7 @@
                                 <a href="course-delete.php?id=<?php echo $row['course_id']; ?>">
                                     <i class="icon fas fa-trash"></i>
                                 </a>
-                                <a href="course-list.php?id=<?php echo $row['course_id']; ?>">
+                                <a href="task-list.php?id=<?php echo $row['course_id']; ?>">
                                     <i class="icon fas fa-eye"></i>
                                 </a>
                             </td>
