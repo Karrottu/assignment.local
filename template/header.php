@@ -75,9 +75,16 @@
                         </li>
 
                     <li class="nav-item dropright">
-                        <a href="notes.php" class="nav-link" aria-haspopup="true" aria-expanded="false">
+                        <a href="notes-list.php" class="nav-link" aria-haspopup="true" aria-expanded="false">
                             <i class="icon fas fa-sticky-note"></i>
                             <span>Notes</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropright">
+                        <a href="calendar.php" class="nav-link" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon fas fa-calendar-alt"></i>
+                            <span>Calendar</span>
                         </a>
                     </li>
 

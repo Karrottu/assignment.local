@@ -74,6 +74,34 @@
         return mysqli_stmt_insert_id($stmt);
     }
 
+    function add_note($title, $body, $course_id, $user_id)
+    {
+        // 1. Connect to the database.
+        $link = connect();
+
+        // 2. Prepare the statement using mysqli
+        // to take care of any potential SQL injections.
+        $stmt = mysqli_prepare($link, "
+            INSERT INTO tbl_notes
+                (title, note, tbl_courses_id, tbl_users_id)
+            VALUES
+                (?, ?, ?, ?)
+        ");
+
+        // 3. Bind the parameters so we don't have to do the work ourselves.
+        // the sequence means: string string double integer double
+        mysqli_stmt_bind_param($stmt, 'ssii', $title, $body, $course_id, $user_id);
+
+        // 4. Execute the statement.
+        mysqli_stmt_execute($stmt);
+
+        // 5. Disconnect from the database.
+        disconnect($link);
+
+        // 6. If the query worked, we should have a new primary key ID.
+        return mysqli_stmt_insert_id($stmt);
+    }
+
     // Checks that the userdata is valid
     function check_api_auth($id, $auth)
     {
@@ -195,7 +223,6 @@
         // 7. all is fine
         return $record ['id'];
     }
-
 
     // Clears the login data from a table.
     function clear_login_data($id, $auth_code)
@@ -375,30 +402,6 @@
         return mysqli_num_rows($result) >= 1;
     }
 
-    // Retrieves all the episodes for the selected show.
-    function get_all_tasks($course_id)
-    {
-        // 1. Connect to the database.
-        $link = connect();
-
-        // 2. Protect the variables.
-        $course_id = mysqli_real_escape_string($link, $course_id);
-
-        // 3. Retrieve all the rows from the table.
-        $result = mysqli_query($link, "
-            SELECT *
-            FROM tbl_tasks
-            WHERE course_id = {$course_id}
-            ORDER BY tskname ASC
-        ");
-
-        // 3. Disconnect from the database.
-        disconnect($link);
-
-        // 4. Return the result set.
-        return $result;
-    }
-
     // Retrieves all the shows available in the database.
     function get_all_courses()
     {
@@ -430,6 +433,49 @@
             SELECT course_id, crsname
             FROM tbl_courses
             ORDER BY crsname ASC
+        ");
+
+        // 3. Disconnect from the database.
+        disconnect($link);
+
+        // 4. Return the result set.
+        return $result;
+    }
+
+    function get_all_notes()
+    {
+        // 1. Connect to the database.
+        $link = connect();
+
+        // 2. Retrieve all the rows from the table.
+        $result = mysqli_query($link, "
+            SELECT *
+            FROM tbl_notes
+            ORDER BY title ASC
+        ");
+
+        // 3. Disconnect from the database.
+        disconnect($link);
+
+        // 4. Return the result set.
+        return $result;
+    }
+
+    // Retrieves all the episodes for the selected show.
+    function get_all_tasks($course_id)
+    {
+        // 1. Connect to the database.
+        $link = connect();
+
+        // 2. Protect the variables.
+        $course_id = mysqli_real_escape_string($link, $course_id);
+
+        // 3. Retrieve all the rows from the table.
+        $result = mysqli_query($link, "
+            SELECT *
+            FROM tbl_tasks
+            WHERE course_id = {$course_id}
+            ORDER BY tskname ASC
         ");
 
         // 3. Disconnect from the database.
@@ -531,7 +577,6 @@
         // 5. There should only be one row, or FALSE if nothing.
         return mysqli_fetch_assoc($result) ?: FALSE;
     }
-
 
     // Checks that a user is logged into the system
     function is_logged()
