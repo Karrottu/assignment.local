@@ -26,10 +26,10 @@
     {
         $headers = getallheaders();
 
-        $id     = isset($headers['User-Ref']) ? $headers['User-Ref'] : '';
-        $auth   = isset($headers['Auth-Key']) ? $headers['Auth-Key'] : '';
+        $id         = isset($headers['User-Ref']) ? $headers['User-Ref'] : '';
+        $auth_code  = isset($headers['Auth-Key']) ? $headers['Auth-Key'] : '';
 
-        return check_api_auth($id, $auth);
+        return check_api_auth($id, $auth_code);
     }
 
 

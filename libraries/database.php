@@ -103,7 +103,7 @@
     }
 
     // Checks that the userdata is valid
-    function check_api_auth($id, $auth)
+    function check_api_auth($id, $auth_code)
     {
         // 1. Connect to the database.
         $link = connect();
@@ -119,8 +119,8 @@
             FROM tbl_user_auth
             WHERE
                 tbl_users_id = {$id} AND
-                auth_code = '{$auth_code}' AND
-                expiration > {$expiration}
+                auth_code = {$auth_code} AND
+                expiration = {$expiration}
         ");
 
         // 4. Disconnect from the database.
