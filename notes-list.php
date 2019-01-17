@@ -5,7 +5,11 @@
 
     include 'template/header.php';
 
-    $note = get_all_notes();
+    //This gets the id of the user currently logged in
+    $id = $_COOKIE['id'];
+
+    //This lets the user only see the notes that are assigned to their ID
+    $note = get_all_notes($id);
 ?>
 
 <header class="page-header row no-gutters py-4 border-bottom">

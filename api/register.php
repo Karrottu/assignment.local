@@ -22,7 +22,6 @@
 
     $salt = random_code();
 
-
     $id = register_login_data($email, $password, $salt, $role);
     if(!$id)
     {

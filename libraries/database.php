@@ -402,6 +402,35 @@
         return mysqli_num_rows($result) >= 1;
     }
 
+    // Erolls users in courses to track which student is in which course
+    function enroll_user($user_id, $course_id)
+    {
+        // 1. Connect to the database.
+        $link = connect();
+
+        // 2. Prepare the statement using mysqli
+        // to take care of any potential SQL injections.
+        $stmt = mysqli_prepare($link, "
+            INSERT INTO tbl_enrolement
+                (tbl_users_id, tbl_course_id)
+            VALUES
+                (?, ?)
+        ");
+
+        // 3. Bind the parameters so we don't have to do the work ourselves.
+        // the sequence means: string string double integer double
+        mysqli_stmt_bind_param($stmt, 'ii', $user_id, $course_id);
+
+        // 4. Execute the statement.
+        mysqli_stmt_execute($stmt);
+
+        // 5. Disconnect from the database.
+        disconnect($link);
+
+        // 6. If the query worked, we should have a new primary key ID.
+        return mysqli_stmt_affected_rows($stmt);
+    }
+
     // Retrieves all the shows available in the database.
     function get_all_courses()
     {
@@ -442,16 +471,19 @@
         return $result;
     }
 
-    function get_all_notes()
+    // Retrieves all the notes that are assigned to a praticular user_id
+    function get_all_notes($id)
     {
         // 1. Connect to the database.
         $link = connect();
+
+        $id = mysqli_real_escape_string($link, $id);
 
         // 2. Retrieve all the rows from the table.
         $result = mysqli_query($link, "
             SELECT *
             FROM tbl_notes
-            ORDER BY title ASC
+            WHERE tbl_users_id = '{$id}'
         ");
 
         // 3. Disconnect from the database.
@@ -509,6 +541,34 @@
 
         // 5. There should only be one row, or FALSE if nothing.
         return mysqli_fetch_assoc($result) ?: FALSE;
+    }
+
+    // Retrieves the Course Code to allow a user to enroll.
+    function get_course_code($code)
+    {
+        // 1. Connect to the database.
+        $link = connect();
+
+        // 2. Retrieve all the rows from the table.
+        $result = mysqli_query($link, "
+            SELECT course_id
+            FROM tbl_courses
+            WHERE
+                code = '{$code}'
+        ");
+
+        // 3. Disconnect from the database.
+        disconnect($link);
+
+        // 4. Return the result set.
+        if (mysqli_num_rows($result) > 1)
+        {
+            return FALSE;
+        }
+
+        $row = mysqli_fetch_assoc($result);
+
+        return $row['course_id'];
     }
 
     // Retrieves a single episode from the database.
@@ -706,5 +766,6 @@
         // 6. If the query worked, we should have a new primary key ID.
         return mysqli_stmt_affected_rows($stmt);
     }
+
 
 ?>
