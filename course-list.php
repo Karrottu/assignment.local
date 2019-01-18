@@ -1,11 +1,19 @@
 <?php
     include 'libraries/database.php';
     include 'libraries/login-check.php';
-
-    include 'template/header.php';
+    include 'libraries/adminaccess.php';
 
     $id = $_COOKIE['id'];
     $course = get_all_courses($id);
+
+    $role = is_admin($id);
+    if ($role == 1)
+    {
+        include 'template/headeradmin.php';
+    } else{
+      include 'template/header.php';
+    }
+
 ?>
 
 <header class="page-header row no-gutters py-4 border-bottom">

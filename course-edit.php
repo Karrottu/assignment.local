@@ -2,13 +2,14 @@
     include 'libraries/form.php';
     include 'libraries/database.php';
     include 'libraries/login-check.php';
+    include 'libraries/adminaccess.php';
 
     // 1. Store the id for the course in a variable.
-    $id = $_GET['id'];
+    $id = $_COOKIE['id'];
 
     // 2. Get the information from the database.
     // if after I set $course, the value is FALSE:
-    if (!$course = get_course($id))
+    if (!$course = get_course($_GET['id']))
     {
         exit("This course doesn't exist.");
     }
@@ -19,7 +20,13 @@
         $formdata = to_formdata($course);
     }
 
-    include 'template/header.php';
+    $role = is_admin($id);
+    if ($role == 1)
+    {
+        include 'template/headeradmin.php';
+    } else{
+      include 'template/header.php';
+    }
 ?>
 <header class="page-header row no-gutters py-4 border-bottom">
     <div class="col-12">

@@ -32,7 +32,6 @@
         return check_api_auth($id, $auth_code);
     }
 
-
     // This function will format an error that we can use in the app
     function error($message = "The Server could not process your request due to an unknown error.")
     {

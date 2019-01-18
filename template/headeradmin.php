@@ -23,20 +23,17 @@
 
             <nav id="sidebar-nav">
                 <ul class="nav flex-column">
-
                     <li class="nav-item dropright">
                         <a href="index.php" class="nav-link" aria-haspopup="true" aria-expanded="false">
                             <i class="icon fas fa-home"></i>
                             <span>Home</span>
                         </a>
                     </li>
-
                     <li class="nav-item dropright">
                         <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="icon fas fa-book"></i>
                             <span>Courses</span>
                         </a>
-
                         <div class="dropdown-menu">
                             <ul class="nav">
                                 <li class="nav-item">
@@ -54,7 +51,6 @@
                             </ul>
                         </div>
                     </li>
-
                     <ul class="nav flex-column">
                         <li class="nav-item dropright">
                             <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -73,38 +69,12 @@
                                 </ul>
                             </div>
                         </li>
-
-                        <li class="nav-item dropright">
-                            <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="icon fas fa-book"></i>
-                                <span>Courses</span>
-                            </a>
-
-                            <div class="dropdown-menu">
-                                <ul class="nav">
-                                    <li class="nav-item">
-                                        <a href="enroll-list.php" class="nav-link">
-                                            <i class="icon fas fa-bars"></i>
-                                            <span>All Courses</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="enroll-user.php" class="nav-link">
-                                            <i class="icon fas fa-plus"></i>
-                                            <span>Enroll in Course</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-
                     <li class="nav-item dropright">
                         <a href="notes-list.php" class="nav-link" aria-haspopup="true" aria-expanded="false">
                             <i class="icon fas fa-sticky-note"></i>
                             <span>Notes</span>
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="logout.php" class="nav-link">
                             <i class="icon fas fa-sign-out-alt"></i>
@@ -114,12 +84,10 @@
                 </ul>
             </nav>
         </aside>
-
         <div id="content">
             <nav class="navbar navbar-light align-items-stretch">
                 <a href="#sidebar" class="toggle-sidebar ml-auto d-block d-md-none border-left" data-toggle="collapse">
                     <i class="icon fas fa-bars"></i>
                 </a>
             </nav>
-
             <div class="container-fluid px-4">

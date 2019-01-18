@@ -3,7 +3,16 @@
     include 'libraries/database.php';
     include 'libraries/login-check.php';
 
-    include 'template/header.php';
+    $id = $_COOKIE['id'];
+    // Checks if user has admin access
+    //if user is admin, they get access to a different menu with more options
+    $role = is_admin($id);
+    if ($role == 1)
+    {
+        include 'template/headeradmin.php';
+    } else{
+      include 'template/header.php';
+    }
 
     $course = get_all_courses_dropdown();
     $course_id = (array_key_exists('course_id', $_GET)) ? $_GET['course_id'] : NULL;

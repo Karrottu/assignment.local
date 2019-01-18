@@ -180,7 +180,6 @@
               tbl_courses_id = {$course_id}
       ");
 
-      echo mysqli_error($link); die;
       // 4. Disconnect from the database.
       disconnect($link);
 
@@ -306,6 +305,32 @@
 
         // 6. If the query worked, we should have changed one row.
         return mysqli_stmt_affected_rows($stmt) == 1;
+    }
+
+    function delete_note($id)
+    {
+      // 1. Connect to the database.
+      $link = connect();
+
+      // 2. Prepare the statement using mysqli
+      // to take care of any potential SQL injections.
+      $stmt = mysqli_prepare($link, "
+          DELETE FROM tbl_notes
+          WHERE note_id = ?
+      ");
+
+      // 3. Bind the parameters so we don't have to do the work ourselves.
+      // the sequence means: integer
+      mysqli_stmt_bind_param($stmt, 'i', $id);
+
+      // 4. Execute the statement.
+      mysqli_stmt_execute($stmt);
+
+      // 5. Disconnect from the database.
+      disconnect($link);
+
+      // 6. If the query worked, we should have changed one row.
+      return mysqli_stmt_affected_rows($stmt) == 1;
     }
 
     // Deletes a task from the table.

@@ -3,7 +3,16 @@
     include 'libraries/database.php';
     include 'libraries/login-check.php';
 
-    include 'template/header.php';
+    $id = $_COOKIE['id'];
+    // Checks if user has admin access
+    //if user is admin, they get access to a different menu with more options
+    $role = is_admin($id);
+    if ($role == 1)
+    {
+        include 'template/headeradmin.php';
+    } else{
+      include 'template/header.php';
+    }
 
 	// we can use a function to make this part easy.
     $formdata = get_formdata();

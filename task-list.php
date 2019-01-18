@@ -1,15 +1,22 @@
 <?php
     include 'libraries/database.php';
     include 'libraries/login-check.php';
+    include 'libraries/adminaccess.php';
 
-    include 'template/header.php';
-
-    // 1. Store the id for the course in a variable.
-    $id = $_GET['id'];
+    $id = $_COOKIE['id'];
+    // 1. Checks if user has admin access
+    //if user is admin, they get access to a different menu with more options
+    $role = is_admin($id);
+    if ($role == 1)
+    {
+        include 'template/headeradmin.php';
+    } else{
+      include 'template/header.php';
+    }
 
     // 2. Get the information from the database.
     // if after I set $task, the value is FALSE:
-    if (!$course = get_course($id))
+    if (!$course = get_course($_GET['id']))
     {
         exit("This task doesn't exist.");
     }

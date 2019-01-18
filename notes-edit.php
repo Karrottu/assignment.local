@@ -2,6 +2,18 @@
     include 'libraries/form.php';
     include 'libraries/database.php';
     include 'libraries/login-check.php';
+    include 'libraries/adminaccess.php';
+
+    $id = $_COOKIE['id'];
+    // Checks if user has admin access
+    //if user is admin, they get access to a different menu with more options
+    $role = is_admin($id);
+    if ($role == 1)
+    {
+        include 'template/headeradmin.php';
+    } else{
+      include 'template/header.php';
+    }
 
     // 1. Store the id for the course in a variable.
     $noteid = $_GET['id'];

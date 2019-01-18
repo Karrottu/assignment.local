@@ -2,6 +2,7 @@
 
     include 'libraries/database.php';
     include 'libraries/login-check.php';
+    include 'libraries/adminaccess.php';
 
     // 1. Store the id for the show in a variable.
     $id = $_GET['id'];

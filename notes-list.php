@@ -2,11 +2,21 @@
 
     include 'libraries/database.php';
     include 'libraries/login-check.php';
+    include 'libraries/adminaccess.php';
 
-    include 'template/header.php';
+    $id = $_COOKIE['id'];
+    // Checks if user has admin access
+    //if user is admin, they get access to a different menu with more options
+    $role = is_admin($id);
+    if ($role == 1)
+    {
+        include 'template/headeradmin.php';
+    } else{
+      include 'template/header.php';
+    }
 
     //This lets the user only see the notes that are assigned to their ID
-    $note = get_all_notes($_COOKIE['id']);
+    $note = get_all_notes($id);
 ?>
 
 <header class="page-header row no-gutters py-4 border-bottom">

@@ -2,8 +2,16 @@
     include 'libraries/form.php';
     include 'libraries/database.php';
     include 'libraries/login-check.php';
+    include 'libraries/adminaccess.php';
 
-    include 'template/header.php';
+    $id = $_COOKIE['id'];
+    $role = is_admin($id);
+    if ($role == 1)
+    {
+        include 'template/headeradmin.php';
+    } else{
+      include 'template/header.php';
+    }
 
 	// we can use a function to make this part easy.
     $formdata = get_formdata();

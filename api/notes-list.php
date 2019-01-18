@@ -4,11 +4,11 @@
 
     $headers = getallheaders();
 
-    $id         = isset($headers['User-Ref']) ? $headers['User-Ref'] : '';
+    $id      = isset($headers['User-Ref']) ? $headers['User-Ref'] : '';
 
     ($_SERVER['REQUEST_METHOD'] ===  'GET') or error();
 
     // Gets the courses from the database, and displays them in a format the app will understand
-    $courses = get_all_courses($id);
-    success('course', mysqli_fetch_all($courses, MYSQLI_ASSOC));
+    $notes = get_all_notes($id);
+    success('note', mysqli_fetch_all($notes, MYSQLI_ASSOC));
 ?>

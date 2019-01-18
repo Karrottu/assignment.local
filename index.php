@@ -55,12 +55,6 @@
                               <td><?php echo $row['title']; ?></td>
                               <td><?php echo $row['note']; ?></td>
                               <td>
-                                  <a href="notes-edit.php?id=<?php echo $row['note_id']; ?>">
-                                      <i class="icon fas fa-pencil-alt"></i>
-                                  </a>
-                                  <a href="notes-delete.php?id=<?php echo $row['note_id']; ?>">
-                                      <i class="icon fas fa-trash"></i>
-                                  </a>
                                   <a href="note-view.php?id=<?php echo $row['note_id']; ?>">
                                       <i class="icon fas fa-eye"></i>
                                   </a>
