@@ -501,7 +501,7 @@
         // 2. Prepare the statement using mysqli
         // to take care of any potential SQL injections.
         $stmt = mysqli_prepare($link, "
-            INSERT INTO tbl_enrolement
+            INSERT INTO tbl_enrollment
                 (tbl_users_id, tbl_course_id)
             VALUES
                 (?, ?)
@@ -537,7 +537,7 @@
             FROM
                 tbl_courses a
             LEFT JOIN
-                tbl_enrolement b
+                tbl_enrollment b
             ON
                 a.course_id = b.tbl_course_id
             WHERE
@@ -563,7 +563,7 @@
               b. crsname,
               b. code
           FROM
-              tbl_enrolement a
+              tbl_enrollment a
           LEFT JOIN
               tbl_courses b
           ON
@@ -679,7 +679,7 @@
             ON
                 a.course_id = b.course_id
             LEFT JOIN
-                tbl_enrolement c
+                tbl_enrollment c
             ON
                 a.course_id = c.tbl_course_id
             WHERE
@@ -793,7 +793,7 @@
               c.name,
               c.surname
           FROM
-              tbl_enrolement a
+              tbl_enrollment a
           LEFT JOIN
               tbl_users b
           ON
