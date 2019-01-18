@@ -5,11 +5,8 @@
 
     include 'template/header.php';
 
-    //This gets the id of the user currently logged in
-    $id = $_COOKIE['id'];
-
     //This lets the user only see the notes that are assigned to their ID
-    $note = get_all_notes($id);
+    $note = get_all_notes($_COOKIE['id']);
 ?>
 
 <header class="page-header row no-gutters py-4 border-bottom">
@@ -35,6 +32,7 @@
                     <thead class="bg-light">
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">Subject</th>
                             <th scope="col">Name</th>
                             <th scope="col">Body</th>
                             <th scope="col"></th>
@@ -44,14 +42,18 @@
 <?php while($row = mysqli_fetch_assoc($note)):?>
                         <tr>
                             <td><span class="counter"></span></td>
+                            <td><?php echo $row['crsname']; ?></td>
                             <td><?php echo $row['title']; ?></td>
                             <td><?php echo $row['note']; ?></td>
                             <td>
-                                <a href="notes-edit.php?id=<?php echo $row['task_id']; ?>&amp;course=<?php echo $id; ?>">
+                                <a href="notes-edit.php?id=<?php echo $row['note_id']; ?>">
                                     <i class="icon fas fa-pencil-alt"></i>
                                 </a>
-                                <a href="notes-delete.php?id=<?php echo $row['task_id']; ?>&amp;course=<?php echo $id; ?>">
+                                <a href="notes-delete.php?id=<?php echo $row['note_id']; ?>">
                                     <i class="icon fas fa-trash"></i>
+                                </a>
+                                <a href="note-view.php?id=<?php echo $row['note_id']; ?>">
+                                    <i class="icon fas fa-eye"></i>
                                 </a>
                             </td>
                         </tr>

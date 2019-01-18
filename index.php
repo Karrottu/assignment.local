@@ -11,6 +11,7 @@
         <h6 class="text-center text-md-left">Section</h6>
         <h3 class="text-center text-md-left">Page Title</h3>
     </div>
+
 </header>
 
 <?php

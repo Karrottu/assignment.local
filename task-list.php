@@ -4,14 +4,14 @@
 
     include 'template/header.php';
 
-    // 1. Store the id for the show in a variable.
+    // 1. Store the id for the course in a variable.
     $id = $_GET['id'];
 
     // 2. Get the information from the database.
     // if after I set $task, the value is FALSE:
     if (!$course = get_course($id))
     {
-        exit("This show doesn't exist.");
+        exit("This task doesn't exist.");
     }
 
     // 3. Get the tasks for this course.
@@ -33,7 +33,7 @@
                 <div class="float-right">
                     <a href="task-add.php?course=<?php echo $id; ?>">New Task</a>
                 </div>
-                <h6 class="m-0"><?php echo $course['course-name']; ?> tasks</h6>
+                <h6 class="m-0"><?php echo $course['course-name']; ?> Tasks</h6>
             </div>
 
             <div class="card-body p-0 text-center">

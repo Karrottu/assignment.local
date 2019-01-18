@@ -54,8 +54,6 @@
         redirect('task-edit', ['id' => $task_id]);
     }
 
-    echo "{$tskname}, {$desc}, {$deadline}, {$course_id}, {$task_id}";
-
     // 6. Insert the data in the table.
     // since the function will return a number, we can check it
     // to see if the query worked.

@@ -102,7 +102,7 @@ html, body {
 }
 
 #content .page-header h6 {
-  color: #97f3ac;
+  color: #328f4f;
   font-size: 0.8rem;
   font-weight: lighter;
   letter-spacing: 1px;
@@ -132,9 +132,37 @@ html, body {
   font-size: 1rem;
 }
 
-#content button {
+#content .btn-primary {
   background-color: #4c2d4c;
   border: #795778;
+  width: 128px;
+}
+
+#content .btn-primary:hover {
+  background-color: #230624;
+}
+
+#content .btn-outline-primary {
+  border-color: #4c2d4c;
+  width: 128px;
+}
+
+#content .btn-outline-primary:hover {
+  background-color: #230624;
+}
+
+#content .btn-outline-primary:hover a {
+  color: #fff;
+}
+
+#content .btn-outline-primary a {
+  color: #4c2d4c;
+  text-decoration: none;
+}
+
+#content a {
+  color: #4c2d4c;
+  text-decoration: none;
 }
 
 @media (max-width: 767px) {

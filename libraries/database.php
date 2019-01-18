@@ -158,6 +158,36 @@
         return mysqli_num_rows($result) == 1;
     }
 
+    function check_note($note_id, $title, $body, $course_id)
+    {
+      // 1. Connect to the database.
+      $link = connect();
+
+      // 2. Protect variables to avoid any SQL injection
+      $note_id = mysqli_real_escape_string($link, $note_id);
+      $title = mysqli_real_escape_string($link, $title);
+      $body = mysqli_real_escape_string($link, $body);
+      $course_id = mysqli_real_escape_string($link, $course_id);
+
+      // 3. Generate a query and return the result.
+      $result = mysqli_query($link, "
+          SELECT note_id
+          FROM tbl_notes
+          WHERE
+              note_id = {$note_id} AND
+              title = '{$title}' AND
+              note = '{$body}' AND
+              tbl_courses_id = {$course_id}
+      ");
+
+      echo mysqli_error($link); die;
+      // 4. Disconnect from the database.
+      disconnect($link);
+
+      // 5. There should only be one row, or FALSE if nothing.
+      return mysqli_num_rows($result) == 1;
+    }
+
     // Checks that the information in a show has changed.
     function check_task($task_id, $tskname, $desc, $deadline, $course_id)
     {
@@ -341,6 +371,41 @@
         return mysqli_stmt_affected_rows($stmt) == 1;
     }
 
+    function edit_note($note_id, $title, $body, $course_id)
+    {
+      if (check_note($note_id, $title, $body, $course_id))
+      {
+        return TRUE;
+      }
+      // 1. Connect to the database.
+      $link = connect();
+
+      // 2. Prepare the statement using mysqli
+      // to take care of any potential SQL injections.
+      $stmt = mysqli_prepare($link, "
+          UPDATE tbl_notes
+          SET
+              title = ?,
+              note = ?,
+              tbl_courses_id = ?
+          WHERE
+              note_id = ?
+      ");
+
+      // 3. Bind the parameters so we don't have to do the work ourselves.
+      // the sequence means: string string double integer double integer
+      mysqli_stmt_bind_param($stmt, 'ssii', $title, $body, $course_id, $user_id);
+
+      // 4. Execute the statement.
+      mysqli_stmt_execute($stmt);
+
+      // 5. Disconnect from the database.
+      disconnect($link);
+
+      // 6. If the query worked, we should have changed one row.
+      return mysqli_stmt_affected_rows($stmt) == 1;
+    }
+
     // Edit a task in the table.
     function edit_task($task_id, $tskname, $desc, $deadline, $course_id)
     {
@@ -418,7 +483,6 @@
         ");
 
         // 3. Bind the parameters so we don't have to do the work ourselves.
-        // the sequence means: string string double integer double
         mysqli_stmt_bind_param($stmt, 'ii', $user_id, $course_id);
 
         // 4. Execute the statement.
@@ -431,17 +495,26 @@
         return mysqli_stmt_affected_rows($stmt);
     }
 
-    // Retrieves all the shows available in the database.
-    function get_all_courses()
+    // Retrieves all the courses available in the database.
+    function get_all_courses($id)
     {
         // 1. Connect to the database.
         $link = connect();
 
         // 2. Retrieve all the rows from the table.
         $result = mysqli_query($link, "
-            SELECT *
-            FROM tbl_courses
-            ORDER BY crsname ASC
+            SELECT
+                a. course_id,
+                a. crsname,
+                a. code
+            FROM
+                tbl_courses a
+            LEFT JOIN
+                tbl_enrolement b
+            ON
+                a.course_id = b.tbl_course_id
+            WHERE
+                tbl_users_id = {$id}
         ");
 
         // 3. Disconnect from the database.
@@ -451,7 +524,35 @@
         return $result;
     }
 
-    // Retrieves all the shows available in the database for a dropdown list.
+    // Retrieves all the courses that a particular user has enrolled in
+    function get_all_enrolled_courses($id)
+    {
+      // 1. Connect to the database.
+      $link = connect();
+
+      // 2. Retrieve all the rows from the table.
+      $result = mysqli_query($link, "
+          SELECT
+              b. crsname,
+              b. code
+          FROM
+              tbl_enrolement a
+          LEFT JOIN
+              tbl_courses b
+          ON
+              a.tbl_course_id = b.course_id
+          WHERE
+            tbl_users_id = {$id}
+      ");
+
+      // 3. Disconnect from the database.
+      disconnect($link);
+
+      // 4. Return the result set.
+      return $result;
+    }
+
+    // Retrieves all the courses available in the database for a dropdown list.
     function get_all_courses_dropdown()
     {
         // 1. Connect to the database.
@@ -481,9 +582,19 @@
 
         // 2. Retrieve all the rows from the table.
         $result = mysqli_query($link, "
-            SELECT *
-            FROM tbl_notes
-            WHERE tbl_users_id = '{$id}'
+            SELECT
+                a. note_id,
+                a. title,
+                a. note,
+                b. crsname
+            FROM
+                tbl_notes a
+            LEFT JOIN
+                tbl_courses b
+            ON
+                a.tbl_courses_id = b.course_id
+            WHERE
+              tbl_users_id = {$id}
         ");
 
         // 3. Disconnect from the database.
@@ -493,7 +604,7 @@
         return $result;
     }
 
-    // Retrieves all the episodes for the selected show.
+    // Retrieves all the tasks for the selected course.
     function get_all_tasks($course_id)
     {
         // 1. Connect to the database.
@@ -517,7 +628,7 @@
         return $result;
     }
 
-    // Retrieves a single show from the database.
+    // Retrieves a single course from the database.
     function get_course($id)
     {
 
@@ -543,11 +654,13 @@
         return mysqli_fetch_assoc($result) ?: FALSE;
     }
 
-    // Retrieves the Course Code to allow a user to enroll.
+    // Checks the code a user inputs with the database.
     function get_course_code($code)
     {
         // 1. Connect to the database.
         $link = connect();
+
+        $code = mysqli_real_escape_string($link, $code);
 
         // 2. Retrieve all the rows from the table.
         $result = mysqli_query($link, "
@@ -566,12 +679,40 @@
             return FALSE;
         }
 
+        // 5. Gets the matching reuslt
         $row = mysqli_fetch_assoc($result);
 
+        // 6. Returns the result
         return $row['course_id'];
     }
 
-    // Retrieves a single episode from the database.
+    // Retrieves a single note from the database.
+    function get_note($noteid)
+    {
+        // 1. Connect to the database.
+        $link = connect();
+
+        // 2. Protect variables to avoid any SQL injection
+        $noteid = mysqli_real_escape_string($link, $noteid);
+
+        // 3. Generate a query and return the result.
+        $result = mysqli_query($link, "
+            SELECT
+                title AS 'note-name',
+                note AS 'note-body',
+                tbl_courses_id AS 'note-course'
+            FROM tbl_notes
+            WHERE note_id = {$noteid}
+        ");
+
+        // 4. Disconnect from the database.
+        disconnect($link);
+
+        // 5. There should only be one row, or FALSE if nothing.
+        return mysqli_fetch_assoc($result) ?: FALSE;
+    }
+
+    // Retrieves a single task from the database.
     function get_task($id)
     {
         // 1. Connect to the database.
@@ -636,6 +777,37 @@
 
         // 5. There should only be one row, or FALSE if nothing.
         return mysqli_fetch_assoc($result) ?: FALSE;
+    }
+
+    function is_admin($id)
+    {
+      // 1. Connect to the database.
+      $link = connect();
+
+      $id = mysqli_real_escape_string($link, $id);
+
+      // 2. Retrieve all the rows from the table.
+      $result = mysqli_query($link, "
+          SELECT
+              tbl_roles_id AS 'role_id'
+          FROM tbl_users
+          WHERE id = {$id}
+      ");
+
+      // 3. Disconnect from the database.
+      disconnect($link);
+
+      // 4. Return the result set.
+      if (mysqli_num_rows($result) > 1)
+      {
+          return FALSE;
+      }
+
+      // 5. Gets the matching reuslt
+      $row = mysqli_fetch_assoc($result);
+
+      // 6. Returns the result
+      return $row['role_id'];
     }
 
     // Checks that a user is logged into the system

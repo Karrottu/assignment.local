@@ -5,7 +5,7 @@
     include 'template/header.php';
 
     $id = $_COOKIE['id'];
-    $course = get_all_courses($id);
+    $course = get_all_enrolled_courses($id);
 ?>
 
 <header class="page-header row no-gutters py-4 border-bottom">

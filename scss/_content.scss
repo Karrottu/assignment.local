@@ -5,7 +5,7 @@
 
     .page-header {
         h6 {
-            color: color($theme, 'secondaryLight');
+            color: color($theme, 'secondaryDark');
             font-size: 0.8rem;
             font-weight: lighter;
             letter-spacing: 1px;
@@ -38,9 +38,33 @@
         }
     }
 
-    button {
+    .btn-primary {
         background-color: color($theme, 'primary');
         border: color($theme, 'primaryLight');
+        width: 128px;
+          &:hover{
+            background-color: color($theme, 'primaryDark');
+          }
+    }
+
+    .btn-outline-primary{
+      border-color: color($theme, 'primary');
+      width: 128px;
+      &:hover{
+        background-color: color($theme, 'primaryDark');
+        a{
+          color: #fff;
+        }
+      }
+      a{
+        color: color($theme, 'primary');
+        text-decoration: none;
+      }
+    }
+
+    a {
+      color: color($theme, 'primary');
+      text-decoration: none;
     }
 }
 

@@ -25,7 +25,7 @@
     </head>
     <body>
         <form class="container-fluid px-4" action="register-process.php" method="post">
-            <div class="col-12 col-md-6 mx-auto py-3">
+            <div class="col-12 col-md-6 mx-auto py-3" id="content">
                 <div class="card">
                     <div class="card-body">
 <?php if (has_error($formdata, 'user-email')): ?>
@@ -69,9 +69,9 @@
                     </div>
 
                     <div class="card-footer text-center">
-                        <button type="submit" class="btn btn-primary">Register</button>
-                        <small class="d-block pt-1">
-                            or <a href="login.php">login</a>
+                        <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                        <small class="d-block pt-3">
+                          <a href="login.php">Already have an account? Login</a>
                         </small>
                     </div>
                 </div>

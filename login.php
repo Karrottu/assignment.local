@@ -13,7 +13,7 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Series Tracker</title>
+        <title>Student Companion</title>
 
         <!-- The Bootstrap CSS file -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -24,7 +24,7 @@
     </head>
     <body>
         <form class="container-fluid px-4" action="login-process.php" method="post">
-            <div class="col-12 col-md-6 mx-auto py-3">
+            <div class="col-12 col-md-6 mx-auto py-3" id="content">
                 <div class="card">
                     <div class="card-body">
 <?php if (has_error($formdata, 'user-email')): ?>
@@ -44,10 +44,8 @@
                     </div>
 
                     <div class="card-footer text-center">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                        <small class="d-block pt-1">
-                            or <a href="register.php">register</a>
-                        </small>
+                        <button type="submit" class="btn btn-primary btn-lg mx-3">Login</button>
+                        <button class="btn btn-outline-primary btn-lg mx-3"><a href="register.php">Sign Up</a></button>
                     </div>
                 </div>
             </div>
