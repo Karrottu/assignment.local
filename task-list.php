@@ -16,17 +16,18 @@
 
     // 3. Get the tasks for this course.
     $task = get_all_tasks($_GET['id']);
+    $students = get_student_list($_GET['id']);
 ?>
 
 <header class="page-header row no-gutters py-4 border-bottom">
     <div class="col-12">
-        <h6 class="text-center text-md-left">Tasks</h6>
+        <h6 class="text-center text-md-left">Course-Details</h6>
         <h3 class="text-center text-md-left"><?php echo $course['course-name']; ?></h3>
     </div>
 </header>
 
 <div class="row content">
-    <div class="col">
+    <div class="col-12 col-lg-9">
 
         <div class="card">
             <div class="card-header border-bottom-0">
@@ -67,6 +68,34 @@
             </div>
         </div>
 
+    </div>
+    <div class="col-12 col-lg-3 mt-3 mt-lg-0">
+        <div class="card">
+          <div class="card-header border-bottom-0">
+              <h6 class="m-0">Students in <?php echo $course['course-name']; ?></h6>
+          </div>
+
+          <div class="card-body p-0 text-center">
+              <table class="table mb-0">
+                  <thead class="bg-light">
+                      <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Surname</th>
+                          <th scope="col">Email</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+<?php while($row = mysqli_fetch_assoc($students)): ?>
+                      <tr>
+                          <td><?php echo $row['name']; ?></td>
+                          <td><?php echo $row['surname']; ?></td>
+                          <td><?php echo $row['email']; ?></td>
+                      </tr>
+<?php endwhile; ?>
+                  </tbody>
+              </table>
+          </div>
+        </div>
     </div>
 </div>
 

@@ -10,7 +10,7 @@
 
 <header class="page-header row no-gutters py-4 border-bottom">
     <div class="col-12">
-        <h6 class="text-center text-md-left">course</h6>
+        <h6 class="text-center text-md-left">course-list</h6>
         <h3 class="text-center text-md-left">All Courses</h3>
     </div>
 </header>

@@ -31,6 +31,30 @@
                         </a>
                     </li>
 
+                    <li class="nav-item dropright">
+                        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon fas fa-book"></i>
+                            <span>Courses</span>
+                        </a>
+
+                        <div class="dropdown-menu">
+                            <ul class="nav">
+                                <li class="nav-item">
+                                    <a href="course-list.php" class="nav-link">
+                                        <i class="icon fas fa-bars"></i>
+                                        <span>All Courses</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="course-add.php" class="nav-link">
+                                        <i class="icon fas fa-plus"></i>
+                                        <span>Add Course</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
                     <ul class="nav flex-column">
                         <li class="nav-item dropright">
                             <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

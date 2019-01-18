@@ -501,6 +501,8 @@
         // 1. Connect to the database.
         $link = connect();
 
+        $id = mysqli_real_escape_string($link, $id);
+
         // 2. Retrieve all the rows from the table.
         $result = mysqli_query($link, "
             SELECT
@@ -628,6 +630,45 @@
         return $result;
     }
 
+    // Retrieves all the tasks and course and shows the next deadline.
+    function get_all_task_deadlines($id)
+    {
+        // 1. Connect to the database.
+        $link = connect();
+
+        // 2. Protect the variables.
+        $id = mysqli_real_escape_string($link, $id);
+
+        $result = mysqli_query($link, "
+        SELECT
+                a.task_id,
+                a.tskname,
+                a.deadline,
+                a.course_id,
+                b.crsname,
+                c.tbl_users_id
+            FROM
+                tbl_tasks a
+            LEFT JOIN
+                tbl_courses b
+            ON
+                a.course_id = b.course_id
+            LEFT JOIN
+                tbl_enrolement c
+            ON
+                a.course_id = c.tbl_course_id
+            WHERE
+                c.tbl_users_id = {$id}
+            ORDER BY deadline ASC
+        ");
+
+        // 3. Disconnect from the database.
+        disconnect($link);
+
+        // 4. Return the result set.
+        return $result;
+    }
+
     // Retrieves a single course from the database.
     function get_course($id)
     {
@@ -710,6 +751,42 @@
 
         // 5. There should only be one row, or FALSE if nothing.
         return mysqli_fetch_assoc($result) ?: FALSE;
+    }
+
+    function get_student_list($course_id)
+    {
+      // 1. Connect to the database.
+      $link = connect();
+
+      // 2. Protect the variables.
+      $course_id = mysqli_real_escape_string($link, $course_id);
+
+      $result = mysqli_query($link, "
+      SELECT
+              a.tbl_course_id,
+              b.email,
+              c.name,
+              c.surname
+          FROM
+              tbl_enrolement a
+          LEFT JOIN
+              tbl_users b
+          ON
+              a.tbl_users_id = b.id
+          LEFT JOIN
+              tbl_user_details c
+          ON
+              a.tbl_users_id = c.users_id
+          WHERE
+              a.tbl_course_id = {$course_id}
+          ORDER BY name ASC
+      ");
+
+      // 3. Disconnect from the database.
+      disconnect($link);
+
+      // 4. Return the result set.
+      return $result;
     }
 
     // Retrieves a single task from the database.
