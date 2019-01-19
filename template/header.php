@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--This is the menu sidebar that a user sees if they do not have admin access-->
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">

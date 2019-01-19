@@ -2,19 +2,19 @@
     include 'libraries/database.php';
     include 'libraries/login-check.php';
 
-    // pages can be built using templates.
-      $id = $_COOKIE['id'];
+    $id = $_COOKIE['id'];
+    // Checks if user has admin access
+    //if user is admin, they get access to a different menu with more options
+    $role = is_admin($id);
+    if ($role == 1)
+    {
+        include 'template/headeradmin.php';
+    } else{
+      include 'template/header.php';
+    }
 
-      $role = is_admin($id);
-      if ($role == 1)
-      {
-          include 'template/headeradmin.php';
-      } else{
-        include 'template/header.php';
-      }
-
-     $deadline = get_all_task_deadlines($id);
-     $note = get_all_notes($_COOKIE['id']);
+    $deadline = get_all_task_deadlines($id);
+    $note = get_all_notes($_COOKIE['id']);
 ?>
 
 <header class="page-header row no-gutters py-4 border-bottom">

@@ -32,6 +32,7 @@
         redirect('enroll-user');
     }
 
+    // Retrieves the course and user id to be inserted into the table
     $course_id = get_course_code($code);
     $user_id = $_COOKIE['id'];
 

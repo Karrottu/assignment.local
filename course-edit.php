@@ -20,6 +20,8 @@
         $formdata = to_formdata($course);
     }
 
+    // Checks if user has admin access
+    //if user is admin, they get access to a different menu with more options
     $role = is_admin($id);
     if ($role == 1)
     {

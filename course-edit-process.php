@@ -28,7 +28,7 @@
     	$has_errors = set_error('course-name', 'The name field is required.');
     }
 
-	// 5. if there are errors, we should go back and course them.
+	// 5. if there are errors, we should go back to the edit page.
     if ($has_errors)
     {
         redirect('course-edit', ['id' => $id]);

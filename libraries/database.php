@@ -74,6 +74,7 @@
         return mysqli_stmt_insert_id($stmt);
     }
 
+    // Add a new note to the table.
     function add_note($title, $body, $course_id, $user_id)
     {
         // 1. Connect to the database.
@@ -130,7 +131,7 @@
         return mysqli_num_rows($result) == 1;
     }
 
-    // Checks that the information in a show has changed.
+    // Checks that the information in a course has changed.
     function check_course($id, $crsname, $code)
     {
         // 1. Connect to the database.
@@ -158,6 +159,7 @@
         return mysqli_num_rows($result) == 1;
     }
 
+    // Checks that the information in a note has changed.
     function check_note($note_id, $title, $body, $course_id)
     {
       // 1. Connect to the database.
@@ -307,6 +309,7 @@
         return mysqli_stmt_affected_rows($stmt) == 1;
     }
 
+    // Deletes a note from the table
     function delete_note($id)
     {
       // 1. Connect to the database.
@@ -396,6 +399,7 @@
         return mysqli_stmt_affected_rows($stmt) == 1;
     }
 
+    // Edit a note in the table.
     function edit_note($note_id, $title, $body, $course_id)
     {
       if (check_note($note_id, $title, $body, $course_id))
@@ -492,7 +496,7 @@
         return mysqli_num_rows($result) >= 1;
     }
 
-    // Erolls users in courses to track which student is in which course
+    // Enrolls users in courses, and tracks which student is in which course
     function enroll_user($user_id, $course_id)
     {
         // 1. Connect to the database.
@@ -655,7 +659,7 @@
         return $result;
     }
 
-    // Retrieves all the tasks and course and shows the next deadline.
+    // Retrieves all the tasks and course deadlines.
     function get_all_task_deadlines($id)
     {
         // 1. Connect to the database.
@@ -778,6 +782,7 @@
         return mysqli_fetch_assoc($result) ?: FALSE;
     }
 
+    // Retrieves a list of students enrolled in a particular course
     function get_student_list($course_id)
     {
       // 1. Connect to the database.
@@ -881,6 +886,7 @@
         return mysqli_fetch_assoc($result) ?: FALSE;
     }
 
+    // Checks if a user has admin access
     function is_admin($id)
     {
       // 1. Connect to the database.
