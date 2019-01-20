@@ -14,7 +14,7 @@
     }
 
     $deadline = get_all_task_deadlines($id);
-    $note = get_all_notes($_COOKIE['id']);
+    $note = get_all_notes($id);
 ?>
 
 <header class="page-header row no-gutters py-4 border-bottom">

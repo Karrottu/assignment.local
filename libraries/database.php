@@ -103,6 +103,34 @@
         return mysqli_stmt_insert_id($stmt);
     }
 
+    function add_post($content, $time, $user_id)
+    {
+        // 1. Connect to the database.
+        $link = connect();
+
+        // 2. Prepare the statement using mysqli
+        // to take care of any potential SQL injections.
+        $stmt = mysqli_prepare($link, "
+            INSERT INTO tbl_posts
+                (post_content, time, tbl_users_id)
+            VALUES
+                (?, ?, ?)
+        ");
+
+        // 3. Bind the parameters so we don't have to do the work ourselves.
+        // the sequence means: string string double integer double
+        mysqli_stmt_bind_param($stmt, 'sii', $content, $time, $user_id);
+
+        // 4. Execute the statement.
+        mysqli_stmt_execute($stmt);
+
+        // 5. Disconnect from the database.
+        disconnect($link);
+
+        // 6. If the query worked, we should have a new primary key ID.
+        return mysqli_stmt_insert_id($stmt);
+    }
+
     // Checks that the userdata is valid
     function check_api_auth($id, $auth_code)
     {
@@ -626,6 +654,40 @@
                 a.tbl_courses_id = b.course_id
             WHERE
               tbl_users_id = {$id}
+        ");
+
+        // 3. Disconnect from the database.
+        disconnect($link);
+
+        // 4. Return the result set.
+        return $result;
+    }
+
+    function get_all_posts()
+    {
+        // 1. Connect to the database.
+        $link = connect();
+
+        // 2. Retrieve all the rows from the table.
+        $result = mysqli_query($link, "
+            SELECT
+                a. post_id,
+                a. post_content,
+                a. time,
+                c. users_id,
+                c. name,
+                c. surname
+            FROM
+                tbl_posts a
+            LEFT JOIN
+                tbl_users b
+            ON
+                a.tbl_users_id = b.id
+            LEFT JOIN
+                tbl_user_details c
+            ON
+                b.id = c.users_id
+            ORDER BY time DESC
         ");
 
         // 3. Disconnect from the database.
