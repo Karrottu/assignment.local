@@ -563,9 +563,9 @@
         // 2. Retrieve all the rows from the table.
         $result = mysqli_query($link, "
             SELECT
-                a. course_id,
-                a. crsname,
-                a. code
+                a.course_id,
+                a.crsname,
+                a.code
             FROM
                 tbl_courses a
             LEFT JOIN
@@ -573,7 +573,7 @@
             ON
                 a.course_id = b.tbl_course_id
             WHERE
-                tbl_users_id = {$id}
+                b.tbl_users_id = {$id}
         ");
 
         // 3. Disconnect from the database.
@@ -642,10 +642,10 @@
         // 2. Retrieve all the rows from the table.
         $result = mysqli_query($link, "
             SELECT
-                a. note_id,
-                a. title,
-                a. note,
-                b. crsname
+                a.note_id,
+                a.title,
+                a.note,
+                b.crsname
             FROM
                 tbl_notes a
             LEFT JOIN

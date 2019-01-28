@@ -17,6 +17,7 @@
     // 3. retrieve the variables from $_POST.
     $name       = $_POST['course-name'];
     $code       = random_code(10);
+    $user_id    = $_COOKIE['id'];
 
     // we'll use a boolean to determine if we have errors on the page.
     $has_errors = FALSE;
@@ -41,6 +42,8 @@
     {
         exit("The query was unsuccessful.");
     }
+
+    enroll_user($user_id, $check);
 
     // 7. Everything worked, go back to the list.
     clear_formdata();
