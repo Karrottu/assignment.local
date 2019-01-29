@@ -4,7 +4,7 @@
 
     $headers = getallheaders();
 
-    $id         = isset($headers['User-Ref']) ? $headers['User-Ref'] : '';
+    $id         = 1;
 
     ($_SERVER['REQUEST_METHOD'] ===  'GET') or error();
 
