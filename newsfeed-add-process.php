@@ -30,7 +30,7 @@
 	// 5. if there are errors, we should go back and course them.
     if ($has_errors)
     {
-        redirect('newsfeed');
+        redirect('index');
     }
 
     // 6. Insert the data in the table.
@@ -44,6 +44,6 @@
 
     // 7. Everything worked, go back to the list.
     clear_formdata();
-    redirect('newsfeed');
+    redirect('index');
 
 ?>

@@ -2,44 +2,34 @@
     include '../libraries/http.php';
     include '../libraries/database.php';
 
-    $headers = getallheaders();
-
-    $id      = 1;
-
-    ($_SERVER['REQUEST_METHOD'] ===  'GET') or error();
-
-    // Gets the courses from the database, and displays them in a format the app will understand
-    $notes = get_all_notes($id);
-    success('note', mysqli_fetch_all($notes, MYSQLI_ASSOC));
-
     // 1. Check if we are using a POST request.
     ($_SERVER['REQUEST_METHOD'] === 'POST' or error());
 
     // 2. WE canuse a custom function to read the information from the app.
     get_input_stream($data);
 
-    $email      = isset($data['email']) ? $data['email'] : '';
-    $password   = isset($data['password']) ? $data['password'] : '';
+    $title       = isset($data['title']) ? $data['title'] : '';
+    $body        = isset($data['body']) ? $data['body'] : '';
+    $course_id   = isset($data['course']) ? $data['course'] : '';
 
-
-    // 3. check the inputs that are required.
-    if (empty($email) || empty($password) || empty($name) || empty($surname))
+    if (empty($title))
     {
-    	error('Please fill in your details');
+        error('Please enter a note title');
     }
 
-    $salt = random_code();
-
-    $id = register_login_data($email, $password, $salt, $role);
-    if(!$id)
+    if (empty($course_id))
     {
-        exit('The query was unsuccessful.');
+        error('Please enter a course');
     }
 
-    $check = register_user_details($id, $name, $surname);
+    $user_id = 1;
+
+    $check = add_note($title, $body, $course_id, $user_id));
     if(!$check)
     {
-        exit('User not fully registered');
+        error('Note could not be added due to an error');
     }
 
+    $notes = get_all_notes($user_id);
+    success('note', mysqli_fetch_all($notes, MYSQLI_ASSOC));
 ?>

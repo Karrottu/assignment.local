@@ -23,4 +23,7 @@
     {
         error('User not enrolled due to an error');
     }
+
+    $courses = get_all_courses($user_id);
+    success('course', mysqli_fetch_all($courses, MYSQLI_ASSOC));
 ?>

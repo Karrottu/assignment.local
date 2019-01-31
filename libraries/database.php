@@ -592,6 +592,7 @@
       // 2. Retrieve all the rows from the table.
       $result = mysqli_query($link, "
           SELECT
+              b. course_id,
               b. crsname,
               b. code
           FROM
