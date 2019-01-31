@@ -59,7 +59,7 @@
                         <tr>
                             <td><span class="counter"></span></td>
                             <td><?php echo $row['tskname']; ?></td>
-                            <td><?php echo $row['deadline']; ?></td>
+                            <td><?php echo gmdate("d/m/Y", $row['deadline']); ?></td>
                             <td>
                                 <a href="task-edit.php?id=<?php echo $row['task_id']; ?>&amp;course=<?php echo $id; ?>">
                                     <i class="icon fas fa-pencil-alt"></i>

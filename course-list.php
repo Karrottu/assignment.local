@@ -4,7 +4,7 @@
     include 'libraries/adminaccess.php';
 
     $id = $_COOKIE['id'];
-    $course = get_all_courses($id);
+    $course = get_all_enrolled_courses($id);
 
     $role = is_admin($id);
     if ($role == 1)
