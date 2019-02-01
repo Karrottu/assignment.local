@@ -30,15 +30,13 @@
     {
         $formdata = to_formdata($note);
     }
-
-    include 'template/header.php';
 ?>
 <header class="page-header row no-gutters py-4 border-bottom">
     <div class="col-12">
         <h6 class="text-center text-md-left">notes</h6>
     </div>
 </header>
-<div class="col-12 col-lg-9">
+<div class="col-12">
     <div class="card">
         <div class="card-body">
 <?php if (has_error($formdata, 'note-name')): ?>

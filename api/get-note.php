@@ -1,10 +1,13 @@
 <?php
-    include '../libraries/http.php';
     include '../libraries/database.php';
+    include '../libraries/http.php';
 
     ($_SERVER['REQUEST_METHOD'] ===  'GET') or error();
 
+    $noteid = isset($_GET['note_id']) ? $_GET['note_id'] : '';
+
     // Gets the courses from the database, and displays them in a format the app will understand
-    $posts = get_all_posts();
-    success('post', mysqli_fetch_all($posts, MYSQLI_ASSOC));
+    $note = get_note($noteid);
+    success('note', mysqli_fetch_all($note, MYSQLI_ASSOC));
+
 ?>

@@ -22,8 +22,7 @@
 
 <header class="page-header row no-gutters py-4 border-bottom">
     <div class="col-12">
-        <h6 class="text-center text-md-left">Section</h6>
-        <h3 class="text-center text-md-left">Page Title</h3>
+        <h3 class="text-center text-md-left">Newsfeed</h3>
     </div>
 </header>
 
@@ -77,10 +76,6 @@
                               <p class="card-text">
                                   <?php echo $row['post_content']; ?>
                               </p>
-                          </div>
-                          <div class="card-footer">
-                              <a href="#" class="card-link"><i class="far fa-thumbs-up"></i> Like</a>
-                              <a href="#" class="card-link"><i class="far fa-comment"></i> Comment</a>
                           </div>
                       </div>
                   <?php endwhile; ?>
