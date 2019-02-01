@@ -845,6 +845,28 @@
         return mysqli_fetch_assoc($result) ?: FALSE;
     }
 
+    function get_single_note($noteid)
+    {
+        // 1. Connect to the database.
+        $link = connect();
+
+        // 2. Protect variables to avoid any SQL injection
+        $noteid = mysqli_real_escape_string($link, $noteid);
+
+        // 3. Generate a query and return the result.
+        $result = mysqli_query($link, "
+            SELECT *
+            FROM tbl_notes
+            WHERE note_id = {$noteid}
+        ");
+
+        // 4. Disconnect from the database.
+        disconnect($link);
+
+        // 5. There should only be one row, or FALSE if nothing.
+        return mysqli_fetch_assoc($result) ?: FALSE;
+    }
+
     // Retrieves a list of students enrolled in a particular course
     function get_student_list($course_id)
     {
